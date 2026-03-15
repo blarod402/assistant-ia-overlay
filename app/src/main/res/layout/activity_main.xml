@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="#0d0d12">
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Assistant IA" android:textSize="28sp" android:textStyle="bold"
+        android:textColor="#ff3c6e" android:layout_marginBottom="12dp"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Overlay sur toutes les apps" android:textSize="14sp"
+        android:textColor="#6b6b80" android:layout_marginBottom="48dp"/>
+    <Button android:id="@+id/btnStart" android:layout_width="match_parent"
+        android:layout_height="56dp" android:text="Charger IA"
+        android:textColor="#ffffff" android:backgroundTint="#ff3c6e"
+        android:layout_marginBottom="16dp"/>
+    <Button android:id="@+id/btnStop" android:layout_width="match_parent"
+        android:layout_height="56dp" android:text="Enlever IA"
+        android:textColor="#ffffff" android:backgroundTint="#2a2a3d"/>
+</LinearLayout>
