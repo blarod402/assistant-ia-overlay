@@ -3,29 +3,33 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"/>
+
     <application
         android:allowBackup="true"
         android:label="Assistant IA"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity" android:exported="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name=".OverlayService" android:exported="false"/>
-        <service
-            android:name=".TextAccessibilityService"
+
+        <activity
+            android:name=".ShareActivity"
             android:exported="true"
-            android:label="Assistant IA"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService"/>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
             </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config"/>
-        </service>
+        </activity>
+
+        <service android:name=".OverlayService" android:exported="false"/>
+
     </application>
 </manifest>
