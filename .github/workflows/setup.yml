@@ -19,11 +19,12 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Make gradlew executable
-        run: chmod +x gradlew
-
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      - name: Install Gradle 8.6
+        run: |
+          wget -q https://services.gradle.org/distributions/gradle-8.6-bin.zip
+          unzip -q gradle-8.6-bin.zip
+          export PATH=$PWD/gradle-8.6/bin:$PATH
+          gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
