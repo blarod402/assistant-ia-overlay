@@ -20,12 +20,18 @@ jobs:
           mkdir -p app/src/main/assets
           mkdir -p gradle/wrapper
 
-          cat > settings.gradle << 'SETTINGS'
+          cat > gradlew << 'GRADLEW'
+          #!/bin/sh
+          exec gradle "$@"
+          GRADLEW
+          chmod +x gradlew
+
+          cat > settings.gradle << 'EOF'
           rootProject.name = "AssistantIA"
           include ':app'
-          SETTINGS
+          EOF
 
-          cat > build.gradle << 'BUILDROOT'
+          cat > build.gradle << 'EOF'
           buildscript {
               ext.kotlin_version = '1.9.22'
               repositories { google(); mavenCentral() }
@@ -35,22 +41,22 @@ jobs:
               }
           }
           allprojects { repositories { google(); mavenCentral() } }
-          BUILDROOT
+          EOF
 
-          cat > gradle.properties << 'PROPS'
+          cat > gradle.properties << 'EOF'
           android.useAndroidX=true
           android.enableJetifier=true
-          PROPS
+          EOF
 
-          cat > gradle/wrapper/gradle-wrapper.properties << 'WRAPPER'
+          cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
           distributionBase=GRADLE_USER_HOME
           distributionPath=wrapper/dists
           distributionUrl=https\://services.gradle.org/distributions/gradle-8.2-bin.zip
           zipStoreBase=GRADLE_USER_HOME
           zipStorePath=wrapper/dists
-          WRAPPER
+          EOF
 
-          cat > app/build.gradle << 'APPBUILD'
+          cat > app/build.gradle << 'EOF'
           plugins {
               id 'com.android.application'
               id 'kotlin-android'
@@ -77,9 +83,9 @@ jobs:
               implementation 'androidx.appcompat:appcompat:1.6.1'
               implementation 'com.google.android.material:material:1.11.0'
           }
-          APPBUILD
+          EOF
 
-          cat > app/src/main/AndroidManifest.xml << 'MANIFEST'
+          cat > app/src/main/AndroidManifest.xml << 'EOF'
           <?xml version="1.0" encoding="utf-8"?>
           <manifest xmlns:android="http://schemas.android.com/apk/res/android"
               package="com.assistantia.overlay">
@@ -99,15 +105,15 @@ jobs:
                   <service android:name=".OverlayService" android:exported="false"/>
               </application>
           </manifest>
-          MANIFEST
+          EOF
 
-          cat > app/src/main/res/values/strings.xml << 'STRINGS'
+          cat > app/src/main/res/values/strings.xml << 'EOF'
           <resources>
               <string name="app_name">Assistant IA</string>
           </resources>
-          STRINGS
+          EOF
 
-          cat > app/src/main/res/layout/activity_main.xml << 'MAINLAYOUT'
+          cat > app/src/main/res/layout/activity_main.xml << 'EOF'
           <?xml version="1.0" encoding="utf-8"?>
           <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
@@ -123,16 +129,16 @@ jobs:
                   android:text="Overlay sur toutes les apps" android:textSize="14sp"
                   android:textColor="#6b6b80" android:layout_marginBottom="48dp"/>
               <Button android:id="@+id/btnStart" android:layout_width="match_parent"
-                  android:layout_height="56dp" android:text="Charger l'IA"
+                  android:layout_height="56dp" android:text="Charger IA"
                   android:textColor="#ffffff" android:backgroundTint="#ff3c6e"
                   android:layout_marginBottom="16dp"/>
               <Button android:id="@+id/btnStop" android:layout_width="match_parent"
-                  android:layout_height="56dp" android:text="Enlever l'IA"
+                  android:layout_height="56dp" android:text="Enlever IA"
                   android:textColor="#ffffff" android:backgroundTint="#2a2a3d"/>
           </LinearLayout>
-          MAINLAYOUT
+          EOF
 
-          cat > app/src/main/res/layout/overlay_layout.xml << 'OVERLAYLAYOUT'
+          cat > app/src/main/res/layout/overlay_layout.xml << 'EOF'
           <?xml version="1.0" encoding="utf-8"?>
           <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
@@ -141,9 +147,9 @@ jobs:
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"/>
           </FrameLayout>
-          OVERLAYLAYOUT
+          EOF
 
-          cat > app/src/main/java/com/assistantia/overlay/MainActivity.kt << 'MAINACTIVITY'
+          cat > app/src/main/java/com/assistantia/overlay/MainActivity.kt << 'EOF'
           package com.assistantia.overlay
           import android.content.Intent
           import android.net.Uri
@@ -167,9 +173,9 @@ jobs:
                   }
               }
           }
-          MAINACTIVITY
+          EOF
 
-          cat > app/src/main/java/com/assistantia/overlay/OverlayService.kt << 'OVERLAYSERVICE'
+          cat > app/src/main/java/com/assistantia/overlay/OverlayService.kt << 'EOF'
           package com.assistantia.overlay
           import android.app.Service
           import android.content.Intent
@@ -210,14 +216,12 @@ jobs:
               }
               private fun hide() { view?.let { wm?.removeView(it); view = null }; stopSelf() }
           }
-          OVERLAYSERVICE
-
-          chmod +x gradlew
+          EOF
 
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
           git add .
-          git commit -m "Setup complete project"
+          git commit -m "Add all project files"
           git push
 
       - name: Setup JDK
