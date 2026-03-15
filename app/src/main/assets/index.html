@@ -3,271 +3,216 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Assistant IA Chat</title>
+<title>Switcher</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#0d0d12;--surface:#16161f;--card:#1e1e2a;--border:#2a2a3d;--accent:#ff3c6e;--accent2:#7c3aed;--text:#e8e8f0;--muted:#6b6b80}
-html,body{height:100%;overflow:hidden;background:rgba(0,0,0,0.01)}
-body{font-family:'Syne',sans-serif;color:var(--text);touch-action:none}
+html,body{height:100%;overflow:hidden;background:transparent}
+body{touch-action:none}
 
-/* FAB */
-#fab{position:fixed;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#ff3c6e,#7c3aed);border:none;z-index:9999;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(255,60,110,.6);touch-action:none;user-select:none;cursor:pointer;animation:pulse 2.5s infinite;bottom:40px;right:24px}
-#fab svg{pointer-events:none}
-@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(255,60,110,.6),0 0 0 0 rgba(255,60,110,.3)}50%{box-shadow:0 4px 20px rgba(255,60,110,.6),0 0 0 14px rgba(255,60,110,0)}}
+#btns{position:fixed;display:flex;flex-direction:column;gap:12px;z-index:9999;bottom:40px;right:24px}
 
-/* CHAT WINDOW */
-#chat{position:fixed;z-index:9998;background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.9);display:none;flex-direction:column;overflow:hidden;touch-action:none}
-#chat.on{display:flex;animation:cIn .25s cubic-bezier(.34,1.56,.64,1)}
-@keyframes cIn{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+.fab{width:64px;height:64px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;letter-spacing:.05em;color:#fff;touch-action:none;user-select:none;position:relative}
 
-/* CHAT HEADER — draggable */
-#chat-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--border);cursor:move;flex-shrink:0;touch-action:none;user-select:none}
-.chat-title{display:flex;align-items:center;gap:8px}
-.chat-title span{font-size:.82rem;font-weight:700;color:var(--text);letter-spacing:.02em}
-.chat-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s infinite}
-.chat-actions{display:flex;gap:6px}
-.hbtn{background:none;border:none;color:var(--muted);cursor:pointer;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;touch-action:manipulation}
-.hbtn:active{background:var(--border)}
+#btnGo{background:linear-gradient(135deg,#ff3c6e,#7c3aed);box-shadow:0 4px 20px rgba(255,60,110,.6);animation:pulseGo 2.5s infinite}
+#btnBack{background:linear-gradient(135deg,#7c3aed,#2563eb);box-shadow:0 4px 20px rgba(124,58,237,.5);animation:pulseBack 2.5s infinite}
 
-/* RESIZE HANDLE */
-#resizeHandle{position:absolute;bottom:0;right:0;width:24px;height:24px;cursor:se-resize;touch-action:none;display:flex;align-items:flex-end;justify-content:flex-end;padding:4px}
-#resizeHandle::after{content:'';width:10px;height:10px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);border-radius:0 0 3px 0}
+@keyframes pulseGo{0%,100%{box-shadow:0 4px 20px rgba(255,60,110,.6),0 0 0 0 rgba(255,60,110,.3)}50%{box-shadow:0 4px 20px rgba(255,60,110,.6),0 0 0 12px rgba(255,60,110,0)}}
+@keyframes pulseBack{0%,100%{box-shadow:0 4px 20px rgba(124,58,237,.5),0 0 0 0 rgba(124,58,237,.3)}50%{box-shadow:0 4px 20px rgba(124,58,237,.5),0 0 0 12px rgba(124,58,237,0)}}
 
-/* MESSAGES */
-#messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch;min-height:0}
-.msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:.9rem;line-height:1.6;word-break:break-word}
-.msg.user{background:linear-gradient(135deg,#ff3c6e,#7c3aed);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.msg.ai{background:var(--surface);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}
-.msg.ai .mlbl{font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
-.ldots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#a78bfa;margin:0 2px;animation:bou 1.2s infinite}
-.ldots span:nth-child(2){animation-delay:.2s}.ldots span:nth-child(3){animation-delay:.4s}
-@keyframes bou{0%,80%,100%{transform:scale(.7);opacity:.5}40%{transform:scale(1.1);opacity:1}}
+.fab svg.ring{position:absolute;top:0;left:0;width:64px;height:64px;transform:rotate(-90deg);pointer-events:none}
+.fab svg.ring circle{fill:none;stroke:rgba(255,255,255,0.9);stroke-width:3;stroke-dasharray:188;stroke-dashoffset:188}
+.fab.pressing svg.ring circle{stroke-dashoffset:0;transition:stroke-dashoffset 2s linear}
 
-/* INPUT */
-#input-area{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);flex-shrink:0;align-items:flex-end}
-#input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 14px;color:var(--text);font-family:'Syne',sans-serif;font-size:.9rem;resize:none;max-height:100px;min-height:40px;outline:none;touch-action:auto}
-#input:focus{border-color:var(--accent)}
-#sendBtn{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#ff3c6e,#7c3aed);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;touch-action:manipulation}
-#sendBtn:active{opacity:.8}
-#sendBtn:disabled{opacity:.4}
+.fab .lbl{font-size:.72rem;font-weight:800;letter-spacing:.05em;line-height:1;text-align:center}
+.fab .sublbl{font-size:.5rem;opacity:.7;margin-top:2px;text-align:center}
 
-/* API KEY SETUP */
-#apiSetup{padding:16px;display:flex;flex-direction:column;gap:10px}
-#apiSetup p{font-size:.82rem;color:var(--muted);line-height:1.6}
-#apiSetup a{color:var(--accent)}
-#apiInput{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.78rem;outline:none;width:100%;touch-action:auto}
-#apiInput:focus{border-color:var(--accent)}
-#saveApiBtn{padding:11px;background:linear-gradient(135deg,#ff3c6e,#7c3aed);border:none;border-radius:10px;color:#fff;font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;touch-action:manipulation}
+#appPicker{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:99998;display:none;flex-direction:column;backdrop-filter:blur(10px)}
+#appPicker.on{display:flex;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-90px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:10px;font-size:.8rem;font-family:'JetBrains Mono',monospace;z-index:99999;transition:transform .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap}
+.picker-header{padding:20px 20px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.picker-title{font-size:1rem;font-weight:700;color:#e8e8f0;font-family:sans-serif}
+.picker-target{font-size:.78rem;color:#ff3c6e;font-weight:600;font-family:sans-serif}
+.picker-close{background:rgba(255,255,255,.1);border:none;color:#e8e8f0;font-size:1.1rem;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;touch-action:manipulation}
+
+.picker-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 12px 32px;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch}
+
+.app-item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border-radius:14px;cursor:pointer;touch-action:manipulation}
+.app-item:active{background:rgba(255,255,255,.08)}
+.app-item .icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;flex-shrink:0}
+.app-item .name{font-size:.65rem;color:#c8c8d8;text-align:center;line-height:1.3;font-family:sans-serif}
+.app-item.selected .icon{outline:3px solid #ff3c6e;outline-offset:2px}
+
+#toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:#1e1e2a;border:1px solid #2a2a3d;color:#e8e8f0;padding:9px 18px;border-radius:10px;font-size:.8rem;font-family:sans-serif;z-index:99999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap}
 #toast.on{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<div id="fab">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
-    <path d="M12 2L13.5 8.5L20 7L15.5 12L20 17L13.5 15.5L12 22L10.5 15.5L4 17L8.5 12L4 7L10.5 8.5Z"/>
-  </svg>
+<div id="btns">
+  <div class="fab" id="btnGo" data-target="go">
+    <svg class="ring"><circle cx="32" cy="32" r="30"/></svg>
+    <div><div class="lbl" id="goLbl">GO</div><div class="sublbl" id="goSub"></div></div>
+  </div>
+  <div class="fab" id="btnBack" data-target="back">
+    <svg class="ring"><circle cx="32" cy="32" r="30"/></svg>
+    <div><div class="lbl" id="backLbl">BACK</div><div class="sublbl" id="backSub"></div></div>
+  </div>
 </div>
 
-<div id="chat">
-  <div id="chat-header">
-    <div class="chat-title">
-      <div class="chat-dot"></div>
-      <span>Assistant IA</span>
+<div id="appPicker">
+  <div class="picker-header">
+    <div>
+      <div class="picker-title">Choisir une app</div>
+      <div class="picker-target" id="pickerTarget"></div>
     </div>
-    <div class="chat-actions">
-      <button class="hbtn" id="settingsBtn" title="API Key">⚙️</button>
-      <button class="hbtn" id="clearBtn" title="Effacer">🗑️</button>
-      <button class="hbtn" id="closeBtn" title="Fermer">✕</button>
-    </div>
+    <button class="picker-close" id="pickerClose">✕</button>
   </div>
-
-  <div id="apiSetup" style="display:none">
-    <p>Entre ta clé <strong style="color:var(--accent)">Gemini gratuite</strong> :<br>
-    Va sur <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a> → Get API Key</p>
-    <input id="apiInput" placeholder="AIza..." type="password"/>
-    <button id="saveApiBtn">💾 Sauvegarder</button>
-  </div>
-
-  <div id="messages">
-    <div class="msg ai">
-      <div class="mlbl">🤖 Assistant IA</div>
-      Bonjour ! Pose-moi n'importe quelle question 😊
-    </div>
-  </div>
-
-  <div id="input-area">
-    <textarea id="input" placeholder="Pose ta question..." rows="1"></textarea>
-    <button id="sendBtn">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
-    </button>
-  </div>
-
-  <div id="resizeHandle"></div>
+  <div class="picker-grid" id="pickerGrid"></div>
 </div>
 
 <div id="toast"></div>
 
 <script>
-const $=id=>document.getElementById(id)
-const P=e=>e.touches?(e.touches[0]||e.changedTouches[0]):e
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v))
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function toast(msg,d=2600){const t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),d)}
+let goApp = JSON.parse(localStorage.getItem('goApp') || 'null')
+let backApp = JSON.parse(localStorage.getItem('backApp') || 'null')
+let currentPicker = null
+let pressTimer = null
 
-// FAB DRAG + TAP
-const fab=$('fab')
-let fp={x:window.innerWidth-86,y:window.innerHeight-102},fd=null,dragged=false,chatOpen=false
-function setFab(){fab.style.cssText+=`;left:${fp.x}px;top:${fp.y}px;right:auto;bottom:auto`}
-setFab()
-fab.addEventListener('touchstart',e=>{e.preventDefault();const p=P(e);fd={ox:fp.x,oy:fp.y,cx:p.clientX,cy:p.clientY};dragged=false},{passive:false})
-fab.addEventListener('touchmove',e=>{if(!fd)return;e.preventDefault();const p=P(e),dx=p.clientX-fd.cx,dy=p.clientY-fd.cy;if(Math.abs(dx)+Math.abs(dy)>5)dragged=true;if(dragged){fp.x=clamp(fd.ox+dx,0,window.innerWidth-62);fp.y=clamp(fd.oy+dy,0,window.innerHeight-62);setFab()}},{passive:false})
-fab.addEventListener('touchend',e=>{e.preventDefault();if(!dragged)toggleChat();fd=null;dragged=false},{passive:false})
-fab.addEventListener('mousedown',e=>{fd={ox:fp.x,oy:fp.y,cx:e.clientX,cy:e.clientY};dragged=false})
-document.addEventListener('mousemove',e=>{if(!fd)return;const dx=e.clientX-fd.cx,dy=e.clientY-fd.cy;if(Math.abs(dx)+Math.abs(dy)>5)dragged=true;if(dragged){fp.x=clamp(fd.ox+dx,0,window.innerWidth-62);fp.y=clamp(fd.oy+dy,0,window.innerHeight-62);setFab()}})
-document.addEventListener('mouseup',e=>{if(!fd)return;if(!dragged)toggleChat();fd=null;dragged=false})
-
-// CHAT WINDOW
-const chat=$('chat')
-let cPos={x:20,y:80},cSize={w:Math.min(360,window.innerWidth-40),h:Math.min(500,window.innerHeight-120)}
-
-function posChat(){
-  chat.style.left=cPos.x+'px';chat.style.top=cPos.y+'px'
-  chat.style.width=cSize.w+'px';chat.style.height=cSize.h+'px'
+function toast(msg, d=2000){
+  const t=document.getElementById('toast')
+  t.textContent=msg; t.classList.add('on')
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),d)
 }
 
-function toggleChat(){
-  chatOpen=!chatOpen
-  chat.classList.toggle('on',chatOpen)
-  if(chatOpen){
-    cPos.x=Math.max(10,Math.min(window.innerWidth-cSize.w-10,fp.x-cSize.w/2))
-    cPos.y=Math.max(10,Math.min(fp.y-cSize.h-10,window.innerHeight-cSize.h-10))
-    if(cPos.y<10) cPos.y=fp.y+70
-    posChat()
-    $('input').focus()
+function updateLabels(){
+  document.getElementById('goLbl').textContent = goApp ? goApp.name.substring(0,5) : 'GO'
+  document.getElementById('goSub').textContent = goApp ? '' : 'hold'
+  document.getElementById('backLbl').textContent = backApp ? backApp.name.substring(0,5) : 'BACK'
+  document.getElementById('backSub').textContent = backApp ? '' : 'hold'
+}
+updateLabels()
+
+function tapBtn(target){
+  if(target === 'go'){
+    if(!goApp){ openPicker('go'); return }
+    if(typeof Android !== 'undefined') Android.openApp(goApp.pkg)
+    else toast('🚀 Ouverture '+goApp.name)
+  } else {
+    if(!backApp){
+      if(typeof Android !== 'undefined') Android.goBack()
+      else toast('⬅️ Retour')
+      return
+    }
+    if(typeof Android !== 'undefined') Android.openApp(backApp.pkg)
+    else toast('⬅️ '+backApp.name)
   }
 }
 
-// DRAG CHAT HEADER
-const header=$('chat-header')
-let hd=null
-header.addEventListener('touchstart',e=>{if(e.target.closest('.hbtn'))return;e.preventDefault();const p=P(e);hd={cx:p.clientX,cy:p.clientY,ox:cPos.x,oy:cPos.y}},{passive:false})
-header.addEventListener('touchmove',e=>{if(!hd)return;e.preventDefault();const p=P(e);cPos.x=hd.ox+p.clientX-hd.cx;cPos.y=hd.oy+p.clientY-hd.cy;posChat()},{passive:false})
-header.addEventListener('touchend',()=>{hd=null},{passive:false})
-header.addEventListener('mousedown',e=>{if(e.target.closest('.hbtn'))return;hd={cx:e.clientX,cy:e.clientY,ox:cPos.x,oy:cPos.y}})
-document.addEventListener('mousemove',e=>{if(!hd)return;cPos.x=hd.ox+e.clientX-hd.cx;cPos.y=hd.oy+e.clientY-hd.cy;posChat()})
-document.addEventListener('mouseup',()=>{hd=null})
-
-// RESIZE
-const rh=$('resizeHandle')
-let rd=null
-rh.addEventListener('touchstart',e=>{e.preventDefault();const p=P(e);rd={cx:p.clientX,cy:p.clientY,ow:cSize.w,oh:cSize.h}},{passive:false})
-rh.addEventListener('touchmove',e=>{if(!rd)return;e.preventDefault();const p=P(e);cSize.w=Math.max(260,rd.ow+p.clientX-rd.cx);cSize.h=Math.max(300,rd.oh+p.clientY-rd.cy);posChat()},{passive:false})
-rh.addEventListener('touchend',()=>{rd=null},{passive:false})
-rh.addEventListener('mousedown',e=>{e.preventDefault();rd={cx:e.clientX,cy:e.clientY,ow:cSize.w,oh:cSize.h}})
-document.addEventListener('mousemove',e=>{if(!rd)return;cSize.w=Math.max(260,rd.ow+e.clientX-rd.cx);cSize.h=Math.max(300,rd.oh+e.clientY-rd.cy);posChat()})
-document.addEventListener('mouseup',()=>{rd=null})
-
-// BUTTONS
-$('closeBtn').addEventListener('click',()=>{chatOpen=false;chat.classList.remove('on')})
-$('closeBtn').addEventListener('touchend',e=>{e.preventDefault();chatOpen=false;chat.classList.remove('on')})
-$('clearBtn').addEventListener('click',clearChat)
-$('clearBtn').addEventListener('touchend',e=>{e.preventDefault();clearChat()})
-$('settingsBtn').addEventListener('click',toggleSettings)
-$('settingsBtn').addEventListener('touchend',e=>{e.preventDefault();toggleSettings()})
-$('saveApiBtn').addEventListener('click',saveApi)
-$('saveApiBtn').addEventListener('touchend',e=>{e.preventDefault();saveApi()})
-
-function clearChat(){
-  $('messages').innerHTML=`<div class="msg ai"><div class="mlbl">🤖 Assistant IA</div>Bonjour ! Pose-moi n'importe quelle question 😊</div>`
+function openPicker(target){
+  currentPicker = target
+  document.getElementById('pickerTarget').textContent = target==='go' ? '→ Bouton GO' : '→ Bouton BACK'
+  renderGrid(target)
+  document.getElementById('appPicker').classList.add('on')
 }
 
-function toggleSettings(){
-  const s=$('apiSetup')
-  s.style.display=s.style.display==='none'?'flex':'none'
-  if(s.style.display==='flex') s.style.flexDirection='column'
-}
+function renderGrid(target){
+  const grid = document.getElementById('pickerGrid')
+  grid.innerHTML = ''
+  const selected = target==='go' ? goApp : backApp
 
-// API KEY
-let apiKey = localStorage.getItem('gemini_key') || ''
-function saveApi(){
-  apiKey=$('apiInput').value.trim()
-  if(!apiKey){toast('⚠️ Clé vide !');return}
-  localStorage.setItem('gemini_key',apiKey)
-  $('apiSetup').style.display='none'
-  toast('✅ Clé sauvegardée !')
-}
-
-// SEND
-$('input').addEventListener('keydown',e=>{
-  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()}
-})
-$('sendBtn').addEventListener('click',sendMsg)
-$('sendBtn').addEventListener('touchend',e=>{e.preventDefault();sendMsg()})
-
-// Auto resize textarea
-$('input').addEventListener('input',function(){
-  this.style.height='auto'
-  this.style.height=Math.min(this.scrollHeight,100)+'px'
-})
-
-let history=[]
-
-function sendMsg(){
-  const input=$('input')
-  const text=input.value.trim()
-  if(!text)return
-  if(!apiKey){toggleSettings();toast('⚠️ Entre ta clé Gemini d\'abord !');return}
-  input.value='';input.style.height='auto'
-  addMsg(text,'user')
-  history.push({role:'user',parts:[{text}]})
-  callGemini()
-}
-
-function addMsg(text,role){
-  const msgs=$('messages')
-  const div=document.createElement('div')
-  div.className='msg '+role
-  if(role==='ai') div.innerHTML=`<div class="mlbl">🤖 Assistant IA</div>${esc(text).replace(/\n/g,'<br>')}`
-  else div.textContent=text
-  msgs.appendChild(div)
-  msgs.scrollTop=msgs.scrollHeight
-  return div
-}
-
-async function callGemini(){
-  const msgs=$('messages')
-  const loadDiv=document.createElement('div')
-  loadDiv.className='msg ai'
-  loadDiv.innerHTML=`<div class="mlbl">🤖 Assistant IA</div><div class="ldots"><span></span><span></span><span></span></div>`
-  msgs.appendChild(loadDiv);msgs.scrollTop=msgs.scrollHeight
-  $('sendBtn').disabled=true
-
-  try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        contents:[
-          {role:'user',parts:[{text:'Tu es un assistant francophone. Réponds clairement et utilement en français.'}]},
-          ...history
-        ]
-      })
-    })
-    const d=await res.json()
-    if(d.error){throw new Error(d.error.message)}
-    const reply=d.candidates?.[0]?.content?.parts?.[0]?.text||'Pas de réponse.'
-    history.push({role:'model',parts:[{text:reply}]})
-    loadDiv.innerHTML=`<div class="mlbl">🤖 Assistant IA</div>${esc(reply).replace(/\n/g,'<br>')}`
-    msgs.scrollTop=msgs.scrollHeight
-  }catch(err){
-    loadDiv.innerHTML=`<div class="mlbl" style="color:#ff3c6e">❌ Erreur</div><div style="color:#ff3c6e;font-size:.84rem">${esc(err.message)}</div>`
+  // Option retour système pour BACK
+  if(target === 'back'){
+    const sys = document.createElement('div')
+    sys.className = 'app-item' + (!backApp ? ' selected' : '')
+    sys.innerHTML = `<div class="icon" style="background:#1e1e2a">⬅️</div><div class="name">Retour</div>`
+    sys.onclick = () => { backApp=null; localStorage.removeItem('backApp'); updateLabels(); closePicker(); toast('✅ BACK = retour système') }
+    grid.appendChild(sys)
   }
-  $('sendBtn').disabled=false
+
+  // Récupère les vraies apps depuis Android
+  let apps = []
+  if(typeof Android !== 'undefined' && Android.getInstalledApps){
+    try { apps = JSON.parse(Android.getInstalledApps()) } catch(e){}
+  }
+
+  // Fallback apps de démo si pas d'Android bridge
+  if(apps.length === 0){
+    apps = [
+      {name:'Claude',icon:'🤖',pkg:'com.anthropic.claude'},
+      {name:'Chrome',icon:'🌐',pkg:'com.android.chrome'},
+      {name:'Discord',icon:'💬',pkg:'com.discord'},
+      {name:'WhatsApp',icon:'💚',pkg:'com.whatsapp'},
+      {name:'YouTube',icon:'▶️',pkg:'com.google.android.youtube'},
+      {name:'Gmail',icon:'📧',pkg:'com.google.android.gm'},
+      {name:'Spotify',icon:'🎵',pkg:'com.spotify.music'},
+      {name:'Instagram',icon:'📸',pkg:'com.instagram.android'},
+      {name:'Telegram',icon:'✈️',pkg:'org.telegram.messenger'},
+      {name:'Netflix',icon:'🎬',pkg:'com.netflix.mediaclient'},
+      {name:'TikTok',icon:'🎵',pkg:'com.zhiliaoapp.musically'},
+      {name:'Twitter',icon:'🐦',pkg:'com.twitter.android'},
+    ]
+  }
+
+  apps.forEach(app => {
+    const item = document.createElement('div')
+    item.className = 'app-item' + (selected?.pkg===app.pkg ? ' selected' : '')
+    const iconHtml = app.iconBase64
+      ? `<img src="data:image/png;base64,${app.iconBase64}" style="width:100%;height:100%;border-radius:12px;object-fit:cover"/>`
+      : `<span style="font-size:1.6rem">${app.icon||'📱'}</span>`
+    item.innerHTML = `<div class="icon" style="background:#1e1e2a">${iconHtml}</div><div class="name">${app.name}</div>`
+    item.onclick = () => {
+      if(target==='go'){ goApp=app; localStorage.setItem('goApp',JSON.stringify(app)) }
+      else { backApp=app; localStorage.setItem('backApp',JSON.stringify(app)) }
+      updateLabels(); closePicker()
+      toast('✅ '+(target==='go'?'GO':'BACK')+' = '+app.name)
+    }
+    grid.appendChild(item)
+  })
 }
+
+function closePicker(){
+  document.getElementById('appPicker').classList.remove('on')
+}
+
+document.getElementById('pickerClose').addEventListener('click', closePicker)
+document.getElementById('pickerClose').addEventListener('touchend', e=>{ e.preventDefault(); closePicker() })
+
+// Drag + long press
+;['btnGo','btnBack'].forEach(id => {
+  const el = document.getElementById(id)
+  let fd=null, dragged=false
+
+  function startPress(cx, cy){
+    fd={cx,cy}; dragged=false
+    pressTimer = setTimeout(()=>{
+      if(!dragged){ el.classList.remove('pressing'); openPicker(el.dataset.target) }
+    }, 2000)
+    el.classList.add('pressing')
+  }
+  function movePress(cx, cy){
+    if(!fd) return
+    if(Math.abs(cx-fd.cx)+Math.abs(cy-fd.cy) > 8){
+      dragged=true; clearTimeout(pressTimer); el.classList.remove('pressing')
+      // drag les boutons
+      const rect = document.getElementById('btns').getBoundingClientRect()
+      document.getElementById('btns').style.right = (window.innerWidth - cx - 32) + 'px'
+      document.getElementById('btns').style.bottom = (window.innerHeight - cy - 32) + 'px'
+    }
+  }
+  function endPress(){
+    clearTimeout(pressTimer); el.classList.remove('pressing')
+    if(!dragged) tapBtn(el.dataset.target)
+    fd=null; dragged=false
+  }
+
+  el.addEventListener('touchstart', e=>{ e.preventDefault(); const p=e.touches[0]; startPress(p.clientX,p.clientY) },{passive:false})
+  el.addEventListener('touchmove', e=>{ e.preventDefault(); const p=e.touches[0]; movePress(p.clientX,p.clientY) },{passive:false})
+  el.addEventListener('touchend', e=>{ e.preventDefault(); endPress() },{passive:false})
+  el.addEventListener('mousedown', e=>startPress(e.clientX,e.clientY))
+  document.addEventListener('mousemove', e=>{ if(fd) movePress(e.clientX,e.clientY) })
+  document.addEventListener('mouseup', ()=>{ if(fd) endPress() })
+})
 </script>
 </body>
 </html>
