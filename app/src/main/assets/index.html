@@ -5,72 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Assistant IA</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--bg:#0d0d12;--surface:#16161f;--card:#1e1e2a;--border:#2a2a3d;--accent:#ff3c6e;--accent2:#7c3aed;--text:#e8e8f0;--muted:#6b6b80;--hl:rgba(255,60,110,.18)}
-html,body{height:100%;overflow:hidden;background:transparent!important}
-body{font-family:'Syne',sans-serif;color:var(--text);touch-action:none}
+:root{--bg:#0d0d12;--surface:#16161f;--card:#1e1e2a;--border:#2a2a3d;--accent:#ff3c6e;--accent2:#7c3aed;--text:#e8e8f0;--muted:#6b6b80}
+html,body{height:100%;overflow:hidden;background:rgba(0,0,0,0.01)}
+body{font-family:sans-serif;color:var(--text);touch-action:none}
 
-#fab{position:fixed;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#ff3c6e,#7c3aed);border:none;z-index:9999;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(255,60,110,.5);touch-action:none;user-select:none;animation:pulse 2.5s infinite;cursor:pointer}
+#fab{position:fixed;width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#ff3c6e,#7c3aed);border:none;z-index:9999;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(255,60,110,.6);touch-action:none;user-select:none;cursor:pointer;animation:pulse 2.5s infinite}
 #fab svg{pointer-events:none}
-@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(255,60,110,.5),0 0 0 0 rgba(255,60,110,.3)}50%{box-shadow:0 4px 20px rgba(255,60,110,.5),0 0 0 12px rgba(255,60,110,0)}}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(255,60,110,.6),0 0 0 0 rgba(255,60,110,.3)}50%{box-shadow:0 4px 20px rgba(255,60,110,.6),0 0 0 14px rgba(255,60,110,0)}}
 
-#menu{position:fixed;z-index:9998;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:0 16px 48px rgba(0,0,0,.8);min-width:210px;display:none;flex-direction:column;gap:8px}
+#menu{position:fixed;z-index:9998;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:0 16px 48px rgba(0,0,0,.9);min-width:220px;display:none;flex-direction:column;gap:8px}
 #menu.on{display:flex;animation:mIn .2s cubic-bezier(.34,1.56,.64,1)}
 @keyframes mIn{from{opacity:0;transform:scale(.88) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.mtitle{font-size:.68rem;font-family:'JetBrains Mono',monospace;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:2px}
-.mbtn{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-family:'Syne',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;min-height:46px;user-select:none;touch-action:manipulation;width:100%;text-align:left}
-.mbtn.on{background:var(--hl);border-color:var(--accent);color:var(--accent)}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0}
+.mtitle{font-size:.68rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid var(--border);margin-bottom:2px}
+.mbtn{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:.9rem;font-weight:600;cursor:pointer;min-height:48px;user-select:none;touch-action:manipulation;width:100%;text-align:left}
+.mbtn.on{background:rgba(255,60,110,.18);border-color:var(--accent);color:var(--accent)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--muted);flex-shrink:0}
 .mbtn.on .dot{background:var(--accent);box-shadow:0 0 8px var(--accent)}
 
-#box{position:fixed;border:2.5px dashed var(--accent);border-radius:10px;background:rgba(255,60,110,.04);z-index:9990;touch-action:none;display:none}
+#box{position:fixed;border:2.5px dashed var(--accent);border-radius:10px;background:rgba(255,60,110,.05);z-index:9990;touch-action:none;display:none}
 #box.on{display:block}
-.blabel{position:absolute;top:-28px;left:0;font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--accent);background:var(--bg);padding:2px 8px;border-radius:5px;border:1px solid var(--accent);white-space:nowrap;pointer-events:none}
-.h{position:absolute;width:50px;height:50px;display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;z-index:20;cursor:pointer}
+.blabel{position:absolute;top:-28px;left:0;font-size:.65rem;color:var(--accent);background:var(--bg);padding:2px 8px;border-radius:5px;border:1px solid var(--accent);white-space:nowrap;pointer-events:none}
+.h{position:absolute;width:50px;height:50px;display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;z-index:20}
 .h::after{content:'';width:22px;height:22px;background:var(--accent);border:3px solid var(--bg);border-radius:6px;box-shadow:0 2px 10px rgba(255,60,110,.6);display:block}
 .h.tl{top:-25px;left:-25px}.h.tr{top:-25px;right:-25px}.h.bl{bottom:-25px;left:-25px}.h.br{bottom:-25px;right:-25px}
-#abtn{position:absolute;bottom:-54px;right:0;padding:11px 18px;background:linear-gradient(135deg,#ff3c6e,#7c3aed);color:#fff;border:none;border-radius:11px;font-family:'Syne',sans-serif;font-size:.86rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;min-height:44px;touch-action:manipulation;user-select:none;z-index:30}
+#abtn{position:absolute;bottom:-54px;right:0;padding:12px 20px;background:linear-gradient(135deg,#ff3c6e,#7c3aed);color:#fff;border:none;border-radius:11px;font-size:.88rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;min-height:46px;touch-action:manipulation;user-select:none;z-index:30}
 
-#panel{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);z-index:9997;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:56vh;display:flex;flex-direction:column;border-radius:18px 18px 0 0}
+#panel{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);z-index:9997;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:60vh;display:flex;flex-direction:column;border-radius:18px 18px 0 0}
 #panel.on{transform:translateY(0)}
 .pbar{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0;flex-shrink:0}
 .phead{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
-.phead h3{font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.phead h3{font-size:.75rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
 .pacts{display:flex;gap:8px;align-items:center}
-.pbtn{padding:8px 13px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:'Syne',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;min-height:40px;touch-action:manipulation;user-select:none}
+.pbtn{padding:9px 14px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:.82rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;min-height:42px;touch-action:manipulation}
 .pbtn.pri{background:linear-gradient(135deg,#ff3c6e,#7c3aed);border-color:transparent;color:#fff}
 .pbtn:disabled{opacity:.3;pointer-events:none}
-.pcls{background:none;border:none;color:var(--muted);font-size:1.3rem;min-width:38px;min-height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation}
+.pcls{background:none;border:none;color:var(--muted);font-size:1.3rem;min-width:40px;min-height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .pbody{padding:14px 16px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch}
 .tblk{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:.9rem;line-height:1.7;color:#c8c8d8}
-.tblk .lbl{font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+.tblk .lbl{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
 .tblk.s{border-color:var(--accent)}.tblk.s .lbl{color:var(--accent)}
 .tblk.a{border-color:var(--accent2)}.tblk.a .lbl{color:#a78bfa}
 .ldots span{display:inline-block;width:7px;height:7px;border-radius:50%;background:#a78bfa;margin:0 3px;animation:bou 1.2s infinite}
 .ldots span:nth-child(2){animation-delay:.2s}.ldots span:nth-child(3){animation-delay:.4s}
 @keyframes bou{0%,80%,100%{transform:scale(.7);opacity:.5}40%{transform:scale(1.1);opacity:1}}
 
-#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-90px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:10px;font-size:.8rem;font-family:'JetBrains Mono',monospace;z-index:99999;transition:transform .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap}
+#toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-90px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:10px;font-size:.8rem;z-index:99999;transition:transform .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap}
 #toast.on{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
 <div id="fab">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
     <path d="M12 2L13.5 8.5L20 7L15.5 12L20 17L13.5 15.5L12 22L10.5 15.5L4 17L8.5 12L4 7L10.5 8.5Z"/>
   </svg>
 </div>
 
 <div id="menu">
   <div class="mtitle">Assistant IA</div>
-  <button class="mbtn" id="btnSel"><div class="dot"></div><span id="selLbl">Sélectionner texte</span></button>
-  <button class="mbtn" id="btnDesel" style="display:none"><div class="dot" style="background:#ff3c6e;box-shadow:0 0 8px #ff3c6e"></div>Désélectionner</button>
+  <button class="mbtn" id="btnSel"><div class="dot"></div><span id="selLbl">Encadrer texte</span></button>
+  <button class="mbtn" id="btnDesel" style="display:none"><div class="dot" style="background:#ff3c6e"></div>Désactiver</button>
 </div>
 
 <div id="box">
-  <div class="blabel">✥ Déplacer  ◢ Coins = redimensionner</div>
+  <div class="blabel">Déplacer · Coins = redimensionner</div>
   <div class="h tl" data-d="tl"></div>
   <div class="h tr" data-d="tr"></div>
   <div class="h bl" data-d="bl"></div>
@@ -84,7 +83,7 @@ body{font-family:'Syne',sans-serif;color:var(--text);touch-action:none}
 <div id="panel">
   <div class="pbar"></div>
   <div class="phead">
-    <h3>Texte Sélectionné</h3>
+    <h3>Résultat</h3>
     <div class="pacts">
       <button class="pbtn pri" id="replyBtn" disabled>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -105,13 +104,11 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v))
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function toast(msg,d=2600){const t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),d)}
 
+// FAB
 const fab=$('fab')
-let fp={x:window.innerWidth-82,y:window.innerHeight-102}
-let fd=null,dragged=false,menuOpen=false
-
+let fp={x:window.innerWidth-82,y:window.innerHeight-102},fd=null,dragged=false,menuOpen=false
 function setFab(){fab.style.cssText+=`;left:${fp.x}px;top:${fp.y}px;right:auto;bottom:auto`}
 setFab()
-
 fab.addEventListener('touchstart',e=>{e.preventDefault();const p=P(e);fd={ox:fp.x,oy:fp.y,cx:p.clientX,cy:p.clientY};dragged=false},{passive:false})
 fab.addEventListener('touchmove',e=>{if(!fd)return;e.preventDefault();const p=P(e),dx=p.clientX-fd.cx,dy=p.clientY-fd.cy;if(Math.abs(dx)+Math.abs(dy)>5)dragged=true;if(dragged){fp.x=clamp(fd.ox+dx,0,window.innerWidth-62);fp.y=clamp(fd.oy+dy,0,window.innerHeight-62);setFab();if(menuOpen)posMenu()}},{passive:false})
 fab.addEventListener('touchend',e=>{e.preventDefault();if(!dragged)toggleMenu();fd=null;dragged=false},{passive:false})
@@ -119,17 +116,18 @@ fab.addEventListener('mousedown',e=>{fd={ox:fp.x,oy:fp.y,cx:e.clientX,cy:e.clien
 document.addEventListener('mousemove',e=>{if(!fd)return;const dx=e.clientX-fd.cx,dy=e.clientY-fd.cy;if(Math.abs(dx)+Math.abs(dy)>5)dragged=true;if(dragged){fp.x=clamp(fd.ox+dx,0,window.innerWidth-62);fp.y=clamp(fd.oy+dy,0,window.innerHeight-62);setFab();if(menuOpen)posMenu()}})
 document.addEventListener('mouseup',e=>{if(!fd)return;if(!dragged)toggleMenu();fd=null;dragged=false})
 
+// MENU
 const menu=$('menu')
 function toggleMenu(){menuOpen=!menuOpen;menu.classList.toggle('on',menuOpen);if(menuOpen)posMenu()}
 function closeMenu(){menuOpen=false;menu.classList.remove('on')}
-function posMenu(){menu.style.display='flex';const fr=fab.getBoundingClientRect(),mw=menu.offsetWidth||210,mh=menu.offsetHeight||120;menu.style.display='';let top=fr.top-mh-14,left=fr.left+fr.width/2-mw/2;if(top<8)top=fr.bottom+14;left=clamp(left,8,window.innerWidth-mw-8);menu.style.top=top+'px';menu.style.left=left+'px'}
+function posMenu(){menu.style.display='flex';const fr=fab.getBoundingClientRect(),mw=menu.offsetWidth||220,mh=menu.offsetHeight||120;menu.style.display='';let top=fr.top-mh-14,left=fr.left+fr.width/2-mw/2;if(top<8)top=fr.bottom+14;left=clamp(left,8,window.innerWidth-mw-8);menu.style.top=top+'px';menu.style.left=left+'px'}
 document.addEventListener('touchstart',e=>{if(menuOpen&&!fab.contains(e.target)&&!menu.contains(e.target))closeMenu()},{passive:true})
 document.addEventListener('mousedown',e=>{if(menuOpen&&!fab.contains(e.target)&&!menu.contains(e.target))closeMenu()})
 
+// BOX
 const selBox=$('box')
 let selectOn=false,selTxt=''
 let box={x:50,y:140,w:Math.min(280,window.innerWidth-80),h:150}
-
 function applyBox(){selBox.style.left=box.x+'px';selBox.style.top=box.y+'px';selBox.style.width=box.w+'px';selBox.style.height=box.h+'px'}
 
 $('btnSel').addEventListener('click',clickSel)
@@ -137,17 +135,19 @@ $('btnSel').addEventListener('touchend',e=>{e.preventDefault();clickSel()})
 $('btnDesel').addEventListener('click',clickDesel)
 $('btnDesel').addEventListener('touchend',e=>{e.preventDefault();clickDesel()})
 
-function clickSel(){selectOn=!selectOn;$('btnSel').classList.toggle('on',selectOn);$('selLbl').textContent=selectOn?'Actif ✓':'Sélectionner texte';$('btnDesel').style.display=selectOn?'flex':'none';if(selectOn){box.x=Math.max(20,window.innerWidth/2-box.w/2);box.y=Math.max(80,window.innerHeight/2-box.h/2);applyBox();selBox.classList.add('on');toast('📐 Déplace et étire les coins')}else{selBox.classList.remove('on')};closeMenu()}
-function clickDesel(){selectOn=false;$('btnSel').classList.remove('on');$('selLbl').textContent='Sélectionner texte';$('btnDesel').style.display='none';selBox.classList.remove('on');closePanel();closeMenu()}
+function clickSel(){selectOn=!selectOn;$('btnSel').classList.toggle('on',selectOn);$('selLbl').textContent=selectOn?'Actif ✓':'Encadrer texte';$('btnDesel').style.display=selectOn?'flex':'none';if(selectOn){box.x=Math.max(20,window.innerWidth/2-box.w/2);box.y=Math.max(80,window.innerHeight/2-box.h/2);applyBox();selBox.classList.add('on');toast('📐 Place le cadre sur le texte')}else{selBox.classList.remove('on')};closeMenu()}
+function clickDesel(){selectOn=false;$('btnSel').classList.remove('on');$('selLbl').textContent='Encadrer texte';$('btnDesel').style.display='none';selBox.classList.remove('on');closePanel();closeMenu()}
 
+// BOX DRAG
 let bd=null
 selBox.addEventListener('touchstart',e=>{if(e.target.classList.contains('h')||e.target.closest('#abtn'))return;e.preventDefault();const p=P(e);bd={cx:p.clientX,cy:p.clientY,bx:box.x,by:box.y}},{passive:false})
 selBox.addEventListener('touchmove',e=>{if(!bd)return;e.preventDefault();const p=P(e);box.x=bd.bx+p.clientX-bd.cx;box.y=bd.by+p.clientY-bd.cy;applyBox()},{passive:false})
 selBox.addEventListener('touchend',()=>{bd=null},{passive:false})
 selBox.addEventListener('mousedown',e=>{if(e.target.classList.contains('h')||e.target.closest('#abtn'))return;e.preventDefault();bd={cx:e.clientX,cy:e.clientY,bx:box.x,by:box.y}})
-document.addEventListener('mousemove',e=>{if(!bd)return;box.x=bd.bx+e.clientX-bd.cx;box.y=bd.by+e.clientY-bd.cy;applyBox()})
+document.addEventListener('mousemove',e=>{if(bd){box.x=bd.bx+e.clientX-bd.cx;box.y=bd.by+e.clientY-bd.cy;applyBox()}})
 document.addEventListener('mouseup',()=>{bd=null})
 
+// RESIZE
 let rd=null
 document.querySelectorAll('.h').forEach(h=>{h.addEventListener('touchstart',rDown,{passive:false});h.addEventListener('mousedown',rDown)})
 function rDown(e){e.preventDefault();e.stopPropagation();const p=P(e),d=e.currentTarget.dataset.d;rd={d,cx:p.clientX,cy:p.clientY,bx:box.x,by:box.y,bw:box.w,bh:box.h}}
@@ -157,40 +157,39 @@ document.addEventListener('touchend',()=>{rd=null},{passive:false})
 document.addEventListener('mousemove',e=>{if(rd)doR(e)})
 document.addEventListener('mouseup',()=>{rd=null})
 
+// ANALYZE — envoie les coords au Kotlin via Android bridge
 $('abtn').addEventListener('click',analyze)
 $('abtn').addEventListener('touchend',e=>{e.preventDefault();analyze()})
 
 function analyze(){
-  clearHL()
   const br=selBox.getBoundingClientRect()
-  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT)
-  const nodes=[],parts=[]
-  while(walker.nextNode()){
-    const n=walker.currentNode
-    if(!n.textContent.trim())continue
-    if(n.parentElement.closest('#fab,#menu,#box,#panel,#toast'))continue
-    const r=document.createRange();r.selectNodeContents(n)
-    for(const rc of r.getClientRects()){
-      if(rc.right>br.left&&rc.left<br.right&&rc.bottom>br.top&&rc.top<br.bottom){nodes.push(n);parts.push(n.textContent.trim());break}
-    }
+  const x=Math.round(br.left),y=Math.round(br.top),w=Math.round(br.width),h=Math.round(br.height)
+  toast('📷 Analyse en cours...')
+  if(typeof Android !== 'undefined'){
+    Android.analyzeRegion(x,y,w,h)
+  } else {
+    toast('⚠️ Bridge Android non disponible')
   }
-  for(const n of nodes){try{const s=document.createElement('span');s.className='hl';n.parentNode.insertBefore(s,n);s.appendChild(n)}catch(e){}}
-  selTxt=parts.join(' ').replace(/\s+/g,' ').trim()
-  if(!selTxt){toast('⚠️ Aucun texte — déplace le cadre');return}
-  showPanel();toast('✅ '+selTxt.split(' ').length+' mots sélectionnés')
 }
 
-function clearHL(){document.querySelectorAll('.hl').forEach(el=>{while(el.firstChild)el.parentNode.insertBefore(el.firstChild,el);el.remove()});document.body.normalize()}
+// Reçoit le texte OCR depuis Kotlin
+function receiveText(text){
+  selTxt=text
+  if(!selTxt||selTxt.trim()===''){toast('⚠️ Aucun texte détecté');return}
+  showPanel()
+  toast('✅ Texte détecté !')
+}
 
-function showPanel(){$('pbody').innerHTML=`<div class="tblk s"><div class="lbl">📌 Texte — ${selTxt.split(' ').length} mots</div><div>${esc(selTxt)}</div></div>`;$('replyBtn').disabled=false;$('panel').classList.add('on')}
+// PANEL
+function showPanel(){$('pbody').innerHTML=`<div class="tblk s"><div class="lbl">📌 Texte détecté</div><div>${esc(selTxt)}</div></div>`;$('replyBtn').disabled=false;$('panel').classList.add('on')}
 function closePanel(){$('panel').classList.remove('on');$('replyBtn').disabled=true}
 $('closeBtn').addEventListener('click',closePanel)
 $('closeBtn').addEventListener('touchend',e=>{e.preventDefault();closePanel()})
 $('replyBtn').addEventListener('click',replyAI)
 $('replyBtn').addEventListener('touchend',e=>{e.preventDefault();replyAI()})
 
+// AI
 let engine=null,modelLoaded=false,modelLoading=false
-
 async function replyAI(){
   const btn=$('replyBtn'),body=$('pbody')
   btn.disabled=true
@@ -201,7 +200,7 @@ async function replyAI(){
   if(!modelLoaded){
     if(modelLoading){btn.disabled=false;return}
     modelLoading=true
-    el.innerHTML=`<div class="lbl">⏳ Chargement IA...</div><div style="font-size:.82rem;color:#6b6b80">Premier lancement ~2GB — une seule fois !</div><div id="prog" style="margin-top:10px;height:6px;background:#2a2a3d;border-radius:3px"><div id="progbar" style="height:100%;width:0%;background:linear-gradient(90deg,#ff3c6e,#7c3aed);border-radius:3px;transition:width .3s"></div></div><div id="progpct" style="font-size:.75rem;color:#6b6b80;margin-top:6px">0%</div>`
+    el.innerHTML=`<div class="lbl">⏳ Chargement IA...</div><div style="font-size:.82rem;color:#6b6b80">Premier lancement ~2GB</div><div id="prog" style="margin-top:10px;height:6px;background:#2a2a3d;border-radius:3px"><div id="progbar" style="height:100%;width:0%;background:linear-gradient(90deg,#ff3c6e,#7c3aed);border-radius:3px;transition:width .3s"></div></div><div id="progpct" style="font-size:.75rem;color:#6b6b80;margin-top:6px">0%</div>`
     try{
       const{CreateMLCEngine}=await import('https://esm.run/@mlc-ai/web-llm')
       engine=await CreateMLCEngine('Phi-3-mini-4k-instruct-q4f16_1-MLC',{initProgressCallback:p=>{const pct=Math.round(p.progress*100);const bar=document.getElementById('progbar');const pctEl=document.getElementById('progpct');if(bar)bar.style.width=pct+'%';if(pctEl)pctEl.textContent=pct+'%'}})
@@ -209,13 +208,13 @@ async function replyAI(){
     }catch(e){modelLoading=false;el.innerHTML=`<div class="lbl" style="color:#ff3c6e">❌ Erreur IA</div><div style="color:#ff3c6e;font-size:.82rem">${esc(e.message)}</div>`;btn.disabled=false;return}
   }
   try{
-    el.innerHTML=`<div class="lbl">🤖 IA — en train de répondre...</div><div id="aistream" style="line-height:1.7"></div>`
+    el.innerHTML=`<div class="lbl">🤖 IA répond...</div><div id="aistream" style="line-height:1.7"></div>`
     const streamEl=document.getElementById('aistream')
     const reply=await engine.chat.completions.create({messages:[{role:'system',content:'Tu es un assistant francophone. Réponds clairement en français.'},{role:'user',content:`Réponds à cette question ou explique ce texte :\n\n"${selTxt}"`}],temperature:0.7,stream:true})
     let full=''
     for await(const chunk of reply){const delta=chunk.choices[0]?.delta?.content||'';full+=delta;streamEl.innerHTML=esc(full).replace(/\n/g,'<br>');body.scrollTop=body.scrollHeight}
-    el.querySelector('.lbl').textContent='🤖 IA — Réponse';toast('✅ Réponse reçue !')
-  }catch(err){el.innerHTML=`<div class="lbl" style="color:#ff3c6e">❌ Erreur</div><div style="color:#ff3c6e;font-size:.84rem">${esc(err.message)}</div>`;toast('❌ Erreur IA')}
+    el.querySelector('.lbl').textContent='🤖 Réponse';toast('✅ Réponse reçue !')
+  }catch(err){el.innerHTML=`<div class="lbl" style="color:#ff3c6e">❌ Erreur</div><div style="color:#ff3c6e">${esc(err.message)}</div>`;toast('❌ Erreur IA')}
   btn.disabled=false
 }
 </script>
