@@ -1,6 +1,7 @@
 package com.assistantia.overlay
 import android.app.Service
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.IBinder
 import android.view.Gravity
@@ -24,11 +25,15 @@ class OverlayService : Service() {
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-            PixelFormat.TRANSLUCENT)
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            PixelFormat.TRANSPARENT)
         p.gravity = Gravity.TOP or Gravity.START
         view = LayoutInflater.from(this).inflate(R.layout.overlay_layout, null)
         val wb = view!!.findViewById<WebView>(R.id.webView)
+        wb.setBackgroundColor(Color.TRANSPARENT)
+        wb.background.alpha = 0
         wb.settings.javaScriptEnabled = true
         wb.settings.domStorageEnabled = true
         wb.settings.cacheMode = WebSettings.LOAD_DEFAULT
