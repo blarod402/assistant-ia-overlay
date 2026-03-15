@@ -8,27 +8,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--bg:#0d0d12;--surface:#16161f;--card:#1e1e2a;--border:#2a2a3d;--accent:#ff3c6e;--accent2:#7c3aed;--text:#e8e8f0;--muted:#6b6b80;--hl:rgba(255,60,110,.18)}
-html,body{height:100%;overflow-x:hidden}
-body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);touch-action:pan-y}
+html,body{height:100%;overflow:hidden;background:transparent!important}
+body{font-family:'Syne',sans-serif;color:var(--text);touch-action:none}
 
-/* PAGE */
-.page{max-width:860px;margin:0 auto;padding:40px 20px 220px;line-height:1.8}
-.page h1{font-size:clamp(1.5rem,5vw,2.4rem);font-weight:800;background:linear-gradient(135deg,#ff3c6e,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
-.page .sub{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.78rem;margin-bottom:32px;letter-spacing:.05em}
-.page p{font-size:1rem;color:#c8c8d8;margin-bottom:18px}
-.page h2{font-size:1.2rem;font-weight:700;color:var(--text);margin:28px 0 10px}
-.hl{background:var(--hl);color:var(--accent)!important;border-bottom:2px solid var(--accent);border-radius:2px;padding:1px 2px}
-.tip{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:28px;display:flex;gap:10px}
-.tip .ic{font-size:1.2rem;flex-shrink:0;margin-top:2px}
-.tip p{font-size:.82rem;color:var(--muted);line-height:1.6;margin:0}
-.tip strong{color:var(--accent)}
-
-/* FAB */
 #fab{position:fixed;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#ff3c6e,#7c3aed);border:none;z-index:9999;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(255,60,110,.5);touch-action:none;user-select:none;animation:pulse 2.5s infinite;cursor:pointer}
 #fab svg{pointer-events:none}
 @keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(255,60,110,.5),0 0 0 0 rgba(255,60,110,.3)}50%{box-shadow:0 4px 20px rgba(255,60,110,.5),0 0 0 12px rgba(255,60,110,0)}}
 
-/* MENU */
 #menu{position:fixed;z-index:9998;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:0 16px 48px rgba(0,0,0,.8);min-width:210px;display:none;flex-direction:column;gap:8px}
 #menu.on{display:flex;animation:mIn .2s cubic-bezier(.34,1.56,.64,1)}
 @keyframes mIn{from{opacity:0;transform:scale(.88) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
@@ -38,24 +24,14 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);touch-
 .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0}
 .mbtn.on .dot{background:var(--accent);box-shadow:0 0 8px var(--accent)}
 
-/* SELECTION BOX */
-#box{position:fixed;border:2.5px dashed var(--accent);border-radius:10px;background:rgba(255,60,110,.03);z-index:9990;touch-action:none;display:none}
+#box{position:fixed;border:2.5px dashed var(--accent);border-radius:10px;background:rgba(255,60,110,.04);z-index:9990;touch-action:none;display:none}
 #box.on{display:block}
 .blabel{position:absolute;top:-28px;left:0;font-size:.65rem;font-family:'JetBrains Mono',monospace;color:var(--accent);background:var(--bg);padding:2px 8px;border-radius:5px;border:1px solid var(--accent);white-space:nowrap;pointer-events:none}
-
-/* CORNER HANDLES — 50x50 touch target, 22x22 visible square */
 .h{position:absolute;width:50px;height:50px;display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;z-index:20;cursor:pointer}
 .h::after{content:'';width:22px;height:22px;background:var(--accent);border:3px solid var(--bg);border-radius:6px;box-shadow:0 2px 10px rgba(255,60,110,.6);display:block}
-.h.tl{top:-25px;left:-25px}
-.h.tr{top:-25px;right:-25px}
-.h.bl{bottom:-25px;left:-25px}
-.h.br{bottom:-25px;right:-25px}
-
-/* ANALYZE BTN */
+.h.tl{top:-25px;left:-25px}.h.tr{top:-25px;right:-25px}.h.bl{bottom:-25px;left:-25px}.h.br{bottom:-25px;right:-25px}
 #abtn{position:absolute;bottom:-54px;right:0;padding:11px 18px;background:linear-gradient(135deg,#ff3c6e,#7c3aed);color:#fff;border:none;border-radius:11px;font-family:'Syne',sans-serif;font-size:.86rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;min-height:44px;touch-action:manipulation;user-select:none;z-index:30}
-#abtn:active{opacity:.82}
 
-/* PANEL */
 #panel{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);z-index:9997;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:56vh;display:flex;flex-direction:column;border-radius:18px 18px 0 0}
 #panel.on{transform:translateY(0)}
 .pbar{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0;flex-shrink:0}
@@ -63,7 +39,6 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);touch-
 .phead h3{font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
 .pacts{display:flex;gap:8px;align-items:center}
 .pbtn{padding:8px 13px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:'Syne',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;min-height:40px;touch-action:manipulation;user-select:none}
-.pbtn:active{opacity:.8}
 .pbtn.pri{background:linear-gradient(135deg,#ff3c6e,#7c3aed);border-color:transparent;color:#fff}
 .pbtn:disabled{opacity:.3;pointer-events:none}
 .pcls{background:none;border:none;color:var(--muted);font-size:1.3rem;min-width:38px;min-height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation}
@@ -76,53 +51,24 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);touch-
 .ldots span:nth-child(2){animation-delay:.2s}.ldots span:nth-child(3){animation-delay:.4s}
 @keyframes bou{0%,80%,100%{transform:scale(.7);opacity:.5}40%{transform:scale(1.1);opacity:1}}
 
-/* TOAST */
 #toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-90px);background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:10px;font-size:.8rem;font-family:'JetBrains Mono',monospace;z-index:99999;transition:transform .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap}
 #toast.on{transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<div class="page" id="content">
-  <h1>Assistant IA Flottant</h1>
-  <p class="sub">// Sélectionner · Analyser · Répondre</p>
-  <div class="tip">
-    <div class="ic">💡</div>
-    <p><strong>Comment utiliser :</strong> Tap sur ✦ → menu. Glisse ✦ pour déplacer. Active <strong>Sélectionner</strong> → déplace le cadre rouge → tire les <strong>4 coins</strong> pour redimensionner (sans limite) → <strong>Analyser</strong> → <strong>Répondre IA</strong>.</p>
-  </div>
-
-  <h2>L'Intelligence Artificielle et le Futur</h2>
-  <p>L'intelligence artificielle représente l'une des avancées technologiques les plus significatives du XXIe siècle. Les systèmes d'IA modernes sont capables d'apprendre à partir de vastes ensembles de données, d'identifier des motifs complexes et de prendre des décisions dans des domaines variés, allant de la médecine à la finance.</p>
-  <p>Les grands modèles de langage comme GPT et Claude ont révolutionné notre façon d'interagir avec les machines. Ces modèles peuvent comprendre le contexte, générer du texte cohérent et répondre à des questions complexes avec une précision remarquable. Mais comment fonctionnent-ils réellement ?</p>
-
-  <h2>L'Apprentissage Profond</h2>
-  <p>L'apprentissage profond utilise des réseaux de neurones artificiels avec plusieurs couches pour extraire des représentations hiérarchiques des données. Chaque couche apprend à détecter des caractéristiques de plus en plus abstraites, permettant ainsi au réseau de comprendre des concepts complexes.</p>
-  <p>Les transformers, introduits en 2017, ont particulièrement transformé le traitement du langage naturel. Leur mécanisme d'attention permet de capturer les dépendances à longue distance dans les textes, ce qui les rend exceptionnellement puissants pour la compréhension et la génération de langage.</p>
-
-  <h2>Applications Pratiques</h2>
-  <p>Dans le domaine médical, l'IA aide à diagnostiquer des maladies à partir d'images médicales avec une précision parfois supérieure à celle des médecins. En finance, les algorithmes analysent des millions de données en temps réel pour prendre des décisions d'investissement optimales.</p>
-  <p>Les véhicules autonomes utilisent des systèmes de vision par ordinateur et d'apprentissage automatique pour naviguer dans des environnements complexes. La reconnaissance vocale et la traduction automatique ont rendu les barrières linguistiques beaucoup plus perméables.</p>
-
-  <h2>Défis Éthiques</h2>
-  <p>Malgré ses nombreux avantages, l'IA soulève d'importantes questions éthiques. Les biais dans les données d'entraînement peuvent conduire à des systèmes discriminatoires. La vie privée est menacée par les capacités de surveillance avancées. Et l'automatisation risque de déplacer de nombreux travailleurs.</p>
-  <p>La gouvernance de l'IA est devenue un enjeu mondial. Des réglementations comme l'AI Act européen tentent d'établir un cadre pour le développement responsable de ces technologies. Comment bénéficier de l'IA tout en minimisant ses risques ?</p>
-</div>
-
-<!-- FAB -->
 <div id="fab">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
     <path d="M12 2L13.5 8.5L20 7L15.5 12L20 17L13.5 15.5L12 22L10.5 15.5L4 17L8.5 12L4 7L10.5 8.5Z"/>
   </svg>
 </div>
 
-<!-- MENU -->
 <div id="menu">
   <div class="mtitle">Assistant IA</div>
   <button class="mbtn" id="btnSel"><div class="dot"></div><span id="selLbl">Sélectionner texte</span></button>
   <button class="mbtn" id="btnDesel" style="display:none"><div class="dot" style="background:#ff3c6e;box-shadow:0 0 8px #ff3c6e"></div>Désélectionner</button>
 </div>
 
-<!-- SELECTION BOX -->
 <div id="box">
   <div class="blabel">✥ Déplacer  ◢ Coins = redimensionner</div>
   <div class="h tl" data-d="tl"></div>
@@ -135,7 +81,6 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);touch-
   </button>
 </div>
 
-<!-- PANEL -->
 <div id="panel">
   <div class="pbar"></div>
   <div class="phead">
@@ -154,350 +99,123 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);touch-
 <div id="toast"></div>
 
 <script>
-// ─── UTILS ───────────────────────────────────────────
-function P(e){ return e.touches ? (e.touches[0]||e.changedTouches[0]) : e }
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
-function toast(msg,d=2600){
-  const t=document.getElementById('toast')
-  t.textContent=msg; t.classList.add('on')
-  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),d)
-}
+const $=id=>document.getElementById(id)
+const P=e=>e.touches?(e.touches[0]||e.changedTouches[0]):e
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v))
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function toast(msg,d=2600){const t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),d)}
 
-// ─── FAB DRAG + TAP ───────────────────────────────────
-const fab = document.getElementById('fab')
-let FX = window.innerWidth-82, FY = window.innerHeight-100
-let fd=null, fMoved=false
+const fab=$('fab')
+let fp={x:window.innerWidth-82,y:window.innerHeight-102}
+let fd=null,dragged=false,menuOpen=false
 
-function fabPlace(){ fab.style.cssText=`left:${FX}px;top:${FY}px;right:auto;bottom:auto` }
-fabPlace()
+function setFab(){fab.style.cssText+=`;left:${fp.x}px;top:${fp.y}px;right:auto;bottom:auto`}
+setFab()
 
-function fabDown(e){
-  e.preventDefault()
-  const p=P(e)
-  fd={ox:FX,oy:FY,cx:p.clientX,cy:p.clientY}
-  fMoved=false
-}
-function fabMove(e){
-  if(!fd) return
-  e.preventDefault()
-  const p=P(e), dx=p.clientX-fd.cx, dy=p.clientY-fd.cy
-  if(Math.abs(dx)+Math.abs(dy)>5) fMoved=true
-  if(fMoved){
-    FX=fd.ox+dx; FY=fd.oy+dy
-    // keep on screen
-    FX=Math.max(-20,Math.min(window.innerWidth-40,FX))
-    FY=Math.max(-20,Math.min(window.innerHeight-40,FY))
-    fabPlace()
-    if(menuOn) placeMenu()
-  }
-}
-function fabUp(e){
-  if(!fd) return
-  e.preventDefault()
-  if(!fMoved) toggleMenu()   // it was a tap → open/close menu
-  fd=null; fMoved=false
-}
+fab.addEventListener('touchstart',e=>{e.preventDefault();const p=P(e);fd={ox:fp.x,oy:fp.y,cx:p.clientX,cy:p.clientY};dragged=false},{passive:false})
+fab.addEventListener('touchmove',e=>{if(!fd)return;e.preventDefault();const p=P(e),dx=p.clientX-fd.cx,dy=p.clientY-fd.cy;if(Math.abs(dx)+Math.abs(dy)>5)dragged=true;if(dragged){fp.x=clamp(fd.ox+dx,0,window.innerWidth-62);fp.y=clamp(fd.oy+dy,0,window.innerHeight-62);setFab();if(menuOpen)posMenu()}},{passive:false})
+fab.addEventListener('touchend',e=>{e.preventDefault();if(!dragged)toggleMenu();fd=null;dragged=false},{passive:false})
+fab.addEventListener('mousedown',e=>{fd={ox:fp.x,oy:fp.y,cx:e.clientX,cy:e.clientY};dragged=false})
+document.addEventListener('mousemove',e=>{if(!fd)return;const dx=e.clientX-fd.cx,dy=e.clientY-fd.cy;if(Math.abs(dx)+Math.abs(dy)>5)dragged=true;if(dragged){fp.x=clamp(fd.ox+dx,0,window.innerWidth-62);fp.y=clamp(fd.oy+dy,0,window.innerHeight-62);setFab();if(menuOpen)posMenu()}})
+document.addEventListener('mouseup',e=>{if(!fd)return;if(!dragged)toggleMenu();fd=null;dragged=false})
 
-fab.addEventListener('touchstart', fabDown, {passive:false})
-fab.addEventListener('touchmove',  fabMove, {passive:false})
-fab.addEventListener('touchend',   fabUp,   {passive:false})
-fab.addEventListener('mousedown',  fabDown)
-document.addEventListener('mousemove', e=>{ if(fd) fabMove(e) })
-document.addEventListener('mouseup',   e=>{ if(fd) fabUp(e) })
+const menu=$('menu')
+function toggleMenu(){menuOpen=!menuOpen;menu.classList.toggle('on',menuOpen);if(menuOpen)posMenu()}
+function closeMenu(){menuOpen=false;menu.classList.remove('on')}
+function posMenu(){menu.style.display='flex';const fr=fab.getBoundingClientRect(),mw=menu.offsetWidth||210,mh=menu.offsetHeight||120;menu.style.display='';let top=fr.top-mh-14,left=fr.left+fr.width/2-mw/2;if(top<8)top=fr.bottom+14;left=clamp(left,8,window.innerWidth-mw-8);menu.style.top=top+'px';menu.style.left=left+'px'}
+document.addEventListener('touchstart',e=>{if(menuOpen&&!fab.contains(e.target)&&!menu.contains(e.target))closeMenu()},{passive:true})
+document.addEventListener('mousedown',e=>{if(menuOpen&&!fab.contains(e.target)&&!menu.contains(e.target))closeMenu()})
 
-// ─── MENU ─────────────────────────────────────────────
-const menu = document.getElementById('menu')
-let menuOn = false
+const selBox=$('box')
+let selectOn=false,selTxt=''
+let box={x:50,y:140,w:Math.min(280,window.innerWidth-80),h:150}
 
-function toggleMenu(){
-  menuOn = !menuOn
-  menu.classList.toggle('on', menuOn)
-  if(menuOn) placeMenu()
-}
-function closeMenu(){ menuOn=false; menu.classList.remove('on') }
+function applyBox(){selBox.style.left=box.x+'px';selBox.style.top=box.y+'px';selBox.style.width=box.w+'px';selBox.style.height=box.h+'px'}
 
-function placeMenu(){
-  const fr=fab.getBoundingClientRect()
-  // make visible first to measure
-  menu.style.visibility='hidden'
-  menu.style.display='flex'
-  const mw=menu.offsetWidth||210, mh=menu.offsetHeight||110
-  menu.style.visibility=''; menu.style.display=''
+$('btnSel').addEventListener('click',clickSel)
+$('btnSel').addEventListener('touchend',e=>{e.preventDefault();clickSel()})
+$('btnDesel').addEventListener('click',clickDesel)
+$('btnDesel').addEventListener('touchend',e=>{e.preventDefault();clickDesel()})
 
-  let top = fr.top - mh - 14
-  let left = fr.left + fr.width/2 - mw/2
-  if(top < 10) top = fr.bottom + 14
-  left = Math.max(8, Math.min(window.innerWidth-mw-8, left))
-  menu.style.top=top+'px'; menu.style.left=left+'px'
-}
+function clickSel(){selectOn=!selectOn;$('btnSel').classList.toggle('on',selectOn);$('selLbl').textContent=selectOn?'Actif ✓':'Sélectionner texte';$('btnDesel').style.display=selectOn?'flex':'none';if(selectOn){box.x=Math.max(20,window.innerWidth/2-box.w/2);box.y=Math.max(80,window.innerHeight/2-box.h/2);applyBox();selBox.classList.add('on');toast('📐 Déplace et étire les coins')}else{selBox.classList.remove('on')};closeMenu()}
+function clickDesel(){selectOn=false;$('btnSel').classList.remove('on');$('selLbl').textContent='Sélectionner texte';$('btnDesel').style.display='none';selBox.classList.remove('on');closePanel();closeMenu()}
 
-// close menu when tapping outside
-document.addEventListener('touchstart', e=>{
-  if(menuOn && !fab.contains(e.target) && !menu.contains(e.target)) closeMenu()
-},{passive:true})
-document.addEventListener('mousedown', e=>{
-  if(menuOn && !fab.contains(e.target) && !menu.contains(e.target)) closeMenu()
-})
-
-// ─── SELECT MODE ──────────────────────────────────────
-const selBox = document.getElementById('box')
-let selOn = false
-let selTxt = ''
-let bx=60, by=140, bw=Math.min(280,window.innerWidth-80), bh=150
-
-function applyBox(){
-  selBox.style.left=bx+'px'; selBox.style.top=by+'px'
-  selBox.style.width=bw+'px'; selBox.style.height=bh+'px'
-}
-
-document.getElementById('btnSel').addEventListener('click', clickSel)
-document.getElementById('btnSel').addEventListener('touchend', e=>{ e.preventDefault(); clickSel() })
-document.getElementById('btnDesel').addEventListener('click', clickDesel)
-document.getElementById('btnDesel').addEventListener('touchend', e=>{ e.preventDefault(); clickDesel() })
-
-function clickSel(){
-  selOn=!selOn
-  const btn=document.getElementById('btnSel')
-  btn.classList.toggle('on',selOn)
-  document.getElementById('selLbl').textContent = selOn ? 'Actif ✓' : 'Sélectionner texte'
-  document.getElementById('btnDesel').style.display = selOn ? 'flex' : 'none'
-  if(selOn){
-    bx=Math.max(20, window.innerWidth/2 - bw/2)
-    by=Math.max(80, window.innerHeight/2 - bh/2)
-    applyBox()
-    selBox.classList.add('on')
-    toast('📐 Déplace le cadre · Tire les coins')
-  } else {
-    selBox.classList.remove('on')
-    clearHL()
-  }
-  closeMenu()
-}
-
-function clickDesel(){
-  selOn=false
-  document.getElementById('btnSel').classList.remove('on')
-  document.getElementById('selLbl').textContent='Sélectionner texte'
-  document.getElementById('btnDesel').style.display='none'
-  selBox.classList.remove('on')
-  clearHL(); closePanel(); closeMenu()
-}
-
-// ─── BOX DRAG (centre) ────────────────────────────────
 let bd=null
+selBox.addEventListener('touchstart',e=>{if(e.target.classList.contains('h')||e.target.closest('#abtn'))return;e.preventDefault();const p=P(e);bd={cx:p.clientX,cy:p.clientY,bx:box.x,by:box.y}},{passive:false})
+selBox.addEventListener('touchmove',e=>{if(!bd)return;e.preventDefault();const p=P(e);box.x=bd.bx+p.clientX-bd.cx;box.y=bd.by+p.clientY-bd.cy;applyBox()},{passive:false})
+selBox.addEventListener('touchend',()=>{bd=null},{passive:false})
+selBox.addEventListener('mousedown',e=>{if(e.target.classList.contains('h')||e.target.closest('#abtn'))return;e.preventDefault();bd={cx:e.clientX,cy:e.clientY,bx:box.x,by:box.y}})
+document.addEventListener('mousemove',e=>{if(!bd)return;box.x=bd.bx+e.clientX-bd.cx;box.y=bd.by+e.clientY-bd.cy;applyBox()})
+document.addEventListener('mouseup',()=>{bd=null})
 
-function boxDown(e){
-  // ignore if on handle or analyze btn
-  if(e.target.classList.contains('h') || e.target.closest('#abtn') || e.target.closest('.h')) return
-  e.preventDefault(); e.stopPropagation()
-  const p=P(e)
-  bd={cx:p.clientX,cy:p.clientY,bx,by}
-}
-function boxMove(e){
-  if(!bd) return; e.preventDefault()
-  const p=P(e)
-  bx=bd.bx+(p.clientX-bd.cx)
-  by=bd.by+(p.clientY-bd.cy)
-  applyBox()
-}
-function boxUp(){ bd=null }
-
-selBox.addEventListener('touchstart', boxDown, {passive:false})
-selBox.addEventListener('touchmove',  boxMove, {passive:false})
-selBox.addEventListener('touchend',   boxUp,   {passive:false})
-selBox.addEventListener('mousedown',  boxDown)
-document.addEventListener('mousemove', e=>{ if(bd) boxMove(e) })
-document.addEventListener('mouseup',   ()=>{ if(bd) boxUp() })
-
-// ─── CORNER RESIZE (NO LIMITS) ────────────────────────
 let rd=null
+document.querySelectorAll('.h').forEach(h=>{h.addEventListener('touchstart',rDown,{passive:false});h.addEventListener('mousedown',rDown)})
+function rDown(e){e.preventDefault();e.stopPropagation();const p=P(e),d=e.currentTarget.dataset.d;rd={d,cx:p.clientX,cy:p.clientY,bx:box.x,by:box.y,bw:box.w,bh:box.h}}
+function doR(e){if(!rd)return;e.preventDefault();const p=P(e),dx=p.clientX-rd.cx,dy=p.clientY-rd.cy,{d,bx:ox,by:oy,bw:ow,bh:oh}=rd;if(d==='br'){box.w=ow+dx;box.h=oh+dy}else if(d==='bl'){const nw=ow-dx;box.x=ox+ow-nw;box.w=nw;box.h=oh+dy}else if(d==='tr'){box.w=ow+dx;const nh=oh-dy;box.y=oy+oh-nh;box.h=nh}else if(d==='tl'){const nw=ow-dx,nh=oh-dy;box.x=ox+ow-nw;box.y=oy+oh-nh;box.w=nw;box.h=nh};applyBox()}
+document.addEventListener('touchmove',e=>{if(rd)doR(e)},{passive:false})
+document.addEventListener('touchend',()=>{rd=null},{passive:false})
+document.addEventListener('mousemove',e=>{if(rd)doR(e)})
+document.addEventListener('mouseup',()=>{rd=null})
 
-document.querySelectorAll('.h').forEach(h=>{
-  h.addEventListener('touchstart', rDown, {passive:false})
-  h.addEventListener('mousedown',  rDown)
-})
-
-function rDown(e){
-  e.preventDefault(); e.stopPropagation()
-  const p=P(e), d=e.currentTarget.dataset.d
-  rd={d, cx:p.clientX, cy:p.clientY, bx, by, bw, bh}
-}
-function rMove(e){
-  if(!rd) return; e.preventDefault()
-  const p=P(e)
-  const dx=p.clientX-rd.cx, dy=p.clientY-rd.cy
-  const {d,bx:ox,by:oy,bw:ow,bh:oh}=rd
-
-  // NO minimum — user can go as small or large as they want
-  if(d==='br'){
-    bw=ow+dx; bh=oh+dy
-  } else if(d==='bl'){
-    const nw=ow-dx; bx=ox+ow-nw; bw=nw; bh=oh+dy
-  } else if(d==='tr'){
-    bw=ow+dx; const nh=oh-dy; by=oy+oh-nh; bh=nh
-  } else if(d==='tl'){
-    const nw=ow-dx, nh=oh-dy
-    bx=ox+ow-nw; by=oy+oh-nh; bw=nw; bh=nh
-  }
-  applyBox()
-}
-function rUp(){ rd=null }
-
-// Single global touch/mouse move+up for resize
-document.addEventListener('touchmove', e=>{
-  if(rd) rMove(e)
-}, {passive:false})
-document.addEventListener('touchend', ()=>{ rd=null },{passive:false})
-document.addEventListener('mousemove', e=>{ if(rd) rMove(e) })
-document.addEventListener('mouseup',   ()=>{ rd=null })
-
-// ─── ANALYZE ──────────────────────────────────────────
-document.getElementById('abtn').addEventListener('click',  analyze)
-document.getElementById('abtn').addEventListener('touchend', e=>{ e.preventDefault(); analyze() })
+$('abtn').addEventListener('click',analyze)
+$('abtn').addEventListener('touchend',e=>{e.preventDefault();analyze()})
 
 function analyze(){
   clearHL()
   const br=selBox.getBoundingClientRect()
-  const walker=document.createTreeWalker(document.getElementById('content'),NodeFilter.SHOW_TEXT)
-  const nodes=[], parts=[]
-
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT)
+  const nodes=[],parts=[]
   while(walker.nextNode()){
     const n=walker.currentNode
-    if(!n.textContent.trim()) continue
-    if(n.parentElement.closest('.tip')) continue
-    const r=document.createRange()
-    r.selectNodeContents(n)
+    if(!n.textContent.trim())continue
+    if(n.parentElement.closest('#fab,#menu,#box,#panel,#toast'))continue
+    const r=document.createRange();r.selectNodeContents(n)
     for(const rc of r.getClientRects()){
-      if(rc.right>br.left && rc.left<br.right && rc.bottom>br.top && rc.top<br.bottom){
-        nodes.push(n); parts.push(n.textContent.trim()); break
-      }
+      if(rc.right>br.left&&rc.left<br.right&&rc.bottom>br.top&&rc.top<br.bottom){nodes.push(n);parts.push(n.textContent.trim());break}
     }
   }
-
-  for(const n of nodes){
-    try{
-      const s=document.createElement('span')
-      s.className='hl'
-      n.parentNode.insertBefore(s,n)
-      s.appendChild(n)
-    }catch(e){}
-  }
-
+  for(const n of nodes){try{const s=document.createElement('span');s.className='hl';n.parentNode.insertBefore(s,n);s.appendChild(n)}catch(e){}}
   selTxt=parts.join(' ').replace(/\s+/g,' ').trim()
-  if(!selTxt){ toast('⚠️ Aucun texte — déplace le cadre'); return }
-  showPanel()
-  toast('✅ '+selTxt.split(' ').length+' mots sélectionnés')
+  if(!selTxt){toast('⚠️ Aucun texte — déplace le cadre');return}
+  showPanel();toast('✅ '+selTxt.split(' ').length+' mots sélectionnés')
 }
 
-function clearHL(){
-  document.querySelectorAll('.hl').forEach(el=>{
-    while(el.firstChild) el.parentNode.insertBefore(el.firstChild,el)
-    el.remove()
-  })
-  document.getElementById('content').normalize()
-}
+function clearHL(){document.querySelectorAll('.hl').forEach(el=>{while(el.firstChild)el.parentNode.insertBefore(el.firstChild,el);el.remove()});document.body.normalize()}
 
-// ─── PANEL ────────────────────────────────────────────
-function showPanel(){
-  document.getElementById('pbody').innerHTML=
-    `<div class="tblk s"><div class="lbl">📌 Texte — ${selTxt.split(' ').length} mots</div><div>${esc(selTxt)}</div></div>`
-  document.getElementById('replyBtn').disabled=false
-  document.getElementById('panel').classList.add('on')
-}
-function closePanel(){
-  document.getElementById('panel').classList.remove('on')
-  document.getElementById('replyBtn').disabled=true
-}
+function showPanel(){$('pbody').innerHTML=`<div class="tblk s"><div class="lbl">📌 Texte — ${selTxt.split(' ').length} mots</div><div>${esc(selTxt)}</div></div>`;$('replyBtn').disabled=false;$('panel').classList.add('on')}
+function closePanel(){$('panel').classList.remove('on');$('replyBtn').disabled=true}
+$('closeBtn').addEventListener('click',closePanel)
+$('closeBtn').addEventListener('touchend',e=>{e.preventDefault();closePanel()})
+$('replyBtn').addEventListener('click',replyAI)
+$('replyBtn').addEventListener('touchend',e=>{e.preventDefault();replyAI()})
 
-document.getElementById('closeBtn').addEventListener('click',  closePanel)
-document.getElementById('closeBtn').addEventListener('touchend', e=>{ e.preventDefault(); closePanel() })
-
-// ─── WEBLLM ───────────────────────────────────────────
-let engine = null
-let modelLoaded = false
-let modelLoading = false
-
-async function initWebLLM(statusEl) {
-  if (modelLoaded) return true
-  if (modelLoading) return false
-  modelLoading = true
-
-  try {
-    const { CreateMLCEngine } = await import('https://esm.run/@mlc-ai/web-llm')
-    statusEl.innerHTML = `<div class="lbl">⏳ Chargement de l'IA locale...</div>
-      <div style="font-size:.82rem;color:var(--muted)">Premier lancement : téléchargement ~2GB<br>À faire une seule fois !</div>
-      <div id="prog" style="margin-top:10px;height:6px;background:var(--border);border-radius:3px">
-        <div id="progbar" style="height:100%;width:0%;background:linear-gradient(90deg,#ff3c6e,#7c3aed);border-radius:3px;transition:width .3s"></div>
-      </div>
-      <div id="progpct" style="font-size:.75rem;color:var(--muted);margin-top:6px">0%</div>`
-
-    engine = await CreateMLCEngine('Phi-3-mini-4k-instruct-q4f16_1-MLC', {
-      initProgressCallback: (p) => {
-        const pct = Math.round(p.progress * 100)
-        const bar = document.getElementById('progbar')
-        const pctEl = document.getElementById('progpct')
-        if (bar) bar.style.width = pct + '%'
-        if (pctEl) pctEl.textContent = pct + '% — ' + (p.text||'')
-      }
-    })
-    modelLoaded = true
-    modelLoading = false
-    return true
-  } catch(e) {
-    modelLoading = false
-    statusEl.innerHTML = `<div class="lbl" style="color:#ff3c6e">❌ Erreur chargement IA</div>
-      <div style="color:#ff3c6e;font-size:.82rem">${esc(e.message)}</div>`
-    return false
-  }
-}
-
-// ─── AI REPLY ─────────────────────────────────────────
-document.getElementById('replyBtn').addEventListener('click',  replyAI)
-document.getElementById('replyBtn').addEventListener('touchend', e=>{ e.preventDefault(); replyAI() })
+let engine=null,modelLoaded=false,modelLoading=false
 
 async function replyAI(){
-  const btn=document.getElementById('replyBtn')
-  const body=document.getElementById('pbody')
+  const btn=$('replyBtn'),body=$('pbody')
   btn.disabled=true
-
   const el=document.createElement('div')
   el.className='tblk a'
   el.innerHTML=`<div class="lbl">🤖 IA Locale</div><div class="ldots"><span></span><span></span><span></span></div>`
-  body.appendChild(el); body.scrollTop=body.scrollHeight
-
-  // Charger le modèle si pas encore fait
-  const ok = await initWebLLM(el)
-  if (!ok) { btn.disabled=false; return }
-
-  try {
-    el.innerHTML=`<div class="lbl">🤖 IA Locale — en train de répondre...</div>
-      <div id="aistream" style="line-height:1.7"></div>`
-    const streamEl = document.getElementById('aistream')
-
-    const reply = await engine.chat.completions.create({
-      messages: [
-        { role: 'system', content: 'Tu es un assistant francophone. Réponds clairement et utilement en français. Explique bien les concepts.' },
-        { role: 'user', content: `Réponds à cette question ou explique ce texte :\n\n"${selTxt}"` }
-      ],
-      temperature: 0.7,
-      stream: true
-    })
-
-    let full = ''
-    for await (const chunk of reply) {
-      const delta = chunk.choices[0]?.delta?.content || ''
-      full += delta
-      streamEl.innerHTML = esc(full).replace(/\n/g,'<br>')
-      body.scrollTop = body.scrollHeight
-    }
-
-    el.querySelector('.lbl').textContent = '🤖 IA Locale — Réponse'
-    toast('✅ Réponse reçue !')
-  } catch(err) {
-    el.innerHTML=`<div class="lbl" style="color:#ff3c6e">❌ Erreur</div>
-      <div style="color:#ff3c6e;font-size:.84rem">${esc(err.message)}</div>`
-    toast('❌ Erreur IA')
+  body.appendChild(el);body.scrollTop=body.scrollHeight
+  if(!modelLoaded){
+    if(modelLoading){btn.disabled=false;return}
+    modelLoading=true
+    el.innerHTML=`<div class="lbl">⏳ Chargement IA...</div><div style="font-size:.82rem;color:#6b6b80">Premier lancement ~2GB — une seule fois !</div><div id="prog" style="margin-top:10px;height:6px;background:#2a2a3d;border-radius:3px"><div id="progbar" style="height:100%;width:0%;background:linear-gradient(90deg,#ff3c6e,#7c3aed);border-radius:3px;transition:width .3s"></div></div><div id="progpct" style="font-size:.75rem;color:#6b6b80;margin-top:6px">0%</div>`
+    try{
+      const{CreateMLCEngine}=await import('https://esm.run/@mlc-ai/web-llm')
+      engine=await CreateMLCEngine('Phi-3-mini-4k-instruct-q4f16_1-MLC',{initProgressCallback:p=>{const pct=Math.round(p.progress*100);const bar=document.getElementById('progbar');const pctEl=document.getElementById('progpct');if(bar)bar.style.width=pct+'%';if(pctEl)pctEl.textContent=pct+'%'}})
+      modelLoaded=true;modelLoading=false
+    }catch(e){modelLoading=false;el.innerHTML=`<div class="lbl" style="color:#ff3c6e">❌ Erreur IA</div><div style="color:#ff3c6e;font-size:.82rem">${esc(e.message)}</div>`;btn.disabled=false;return}
   }
+  try{
+    el.innerHTML=`<div class="lbl">🤖 IA — en train de répondre...</div><div id="aistream" style="line-height:1.7"></div>`
+    const streamEl=document.getElementById('aistream')
+    const reply=await engine.chat.completions.create({messages:[{role:'system',content:'Tu es un assistant francophone. Réponds clairement en français.'},{role:'user',content:`Réponds à cette question ou explique ce texte :\n\n"${selTxt}"`}],temperature:0.7,stream:true})
+    let full=''
+    for await(const chunk of reply){const delta=chunk.choices[0]?.delta?.content||'';full+=delta;streamEl.innerHTML=esc(full).replace(/\n/g,'<br>');body.scrollTop=body.scrollHeight}
+    el.querySelector('.lbl').textContent='🤖 IA — Réponse';toast('✅ Réponse reçue !')
+  }catch(err){el.innerHTML=`<div class="lbl" style="color:#ff3c6e">❌ Erreur</div><div style="color:#ff3c6e;font-size:.84rem">${esc(err.message)}</div>`;toast('❌ Erreur IA')}
   btn.disabled=false
 }
 </script>
