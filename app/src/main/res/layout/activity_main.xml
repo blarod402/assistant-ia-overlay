@@ -6,17 +6,68 @@
     android:gravity="center"
     android:padding="32dp"
     android:background="#0d0d12">
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Assistant IA" android:textSize="28sp" android:textStyle="bold"
-        android:textColor="#ff3c6e" android:layout_marginBottom="12dp"/>
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="Overlay sur toutes les apps" android:textSize="14sp"
-        android:textColor="#6b6b80" android:layout_marginBottom="48dp"/>
-    <Button android:id="@+id/btnStart" android:layout_width="match_parent"
-        android:layout_height="56dp" android:text="Charger IA"
-        android:textColor="#ffffff" android:backgroundTint="#ff3c6e"
-        android:layout_marginBottom="16dp"/>
-    <Button android:id="@+id/btnStop" android:layout_width="match_parent"
-        android:layout_height="56dp" android:text="Enlever IA"
-        android:textColor="#ffffff" android:backgroundTint="#2a2a3d"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Assistant IA"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#ff3c6e"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entre ta clé Gemini gratuite"
+        android:textSize="13sp"
+        android:textColor="#6b6b80"
+        android:layout_marginBottom="24dp"/>
+
+    <EditText
+        android:id="@+id/apiKeyInput"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:hint="AIza..."
+        android:textColor="#e8e8f0"
+        android:textColorHint="#6b6b80"
+        android:background="#16161f"
+        android:padding="12dp"
+        android:inputType="textPassword"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnSaveKey"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="💾 Sauvegarder la clé"
+        android:textColor="#ffffff"
+        android:backgroundTint="#7c3aed"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="▶ Activer Assistant IA"
+        android:textColor="#ffffff"
+        android:backgroundTint="#ff3c6e"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="⏹ Désactiver"
+        android:textColor="#ffffff"
+        android:backgroundTint="#2a2a3d"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clé gratuite sur aistudio.google.com"
+        android:textSize="11sp"
+        android:textColor="#6b6b80"
+        android:layout_marginTop="24dp"/>
+
 </LinearLayout>
